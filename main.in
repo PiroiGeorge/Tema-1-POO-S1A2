@@ -1,0 +1,244 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <list>
+
+
+using namespace std;
+
+class Viewers {
+private:
+	vector<int> views;
+
+public:
+	void View() {
+		views.push_back(1);
+	}
+
+	int GetTotalViews() {
+		return views.size();
+	}
+};
+
+class Subscribers {
+private:
+	int subscribers = 0;
+
+public:
+	void Subscribe() {
+		subscribers++;
+	}
+
+	void Unsubscribe() {
+		if (subscribers > 0) {
+			subscribers--;
+		}
+	}
+
+	int GetSubscribersInfo() {
+		return subscribers;
+	}
+};
+
+class Video : public Viewers {
+private:
+	string VideoName;
+	string PublishingDate;
+	string LengthVideo;
+
+public:
+	Video(string name, string date, string length) {
+		VideoName = name;
+		PublishingDate = date;
+		LengthVideo = length;
+	}
+
+	void GetVideoInfo() {
+		cout << "Video name: " << VideoName << endl;
+		cout << "The date of publishing: " << PublishingDate << endl;
+		cout << "Length video(minutes and seconds): " << LengthVideo << endl;
+		cout << "Total views: " << GetTotalViews() << endl;
+	}
+
+	void Watch() {
+		View();
+	}
+};
+
+class YouTubeChannel :public Subscribers {
+private:
+	string Channel;
+	string FirstName;
+	string LastName;
+	int Age;
+	string Email;
+	string Description;
+	vector<Video> videos;
+	Subscribers subscribers;
+
+public:
+
+	YouTubeChannel(string channel, string firstName, string lastName, int age, string description) {
+		Channel = channel;
+		FirstName = firstName;
+		LastName = lastName;
+		Age = age;
+		Email = firstName + "." + lastName + "@gmail.com";
+		Description = description;
+
+	}
+
+	bool operator==(const YouTubeChannel& channel)const {
+		return this->Channel == channel.Channel;
+	}
+
+	void GetChannelInfo() {
+		cout << "YouTube channel name: " << Channel << endl;
+		cout << "Owner name: " << FirstName << " " << LastName << endl;
+		cout << "Owner age: " << Age << endl;
+		cout << "Owner email: " << Email << endl;
+		cout << "Channel description: " << Description << endl;
+		cout << "Numbers of subscribers: " << GetSubscribersInfo() << endl;
+	}
+
+	void AddVideo(Video video) {
+		videos.push_back(video);
+	}
+
+	void ListVideo() {
+		cout << "Videos on the " << Channel << " :\n" << endl;
+		for (Video& video : videos) {
+			video.GetVideoInfo();
+			cout << "---------------------------------------------------\n" << endl;
+			
+		}
+	}
+
+	void Subscribe() {
+		Subscribers::Subscribe();
+	}
+
+	void Unsubscribe() {
+		Subscribers::Unsubscribe();
+	}
+
+	YouTubeChannel& operator=(const YouTubeChannel& original) {
+
+		Channel = original.Channel;
+		FirstName = original.FirstName;
+		LastName = original.LastName;
+		Age = original.Age;
+		Email = original.Email;
+		Description = original.Description;
+
+	}
+
+	friend ostream& operator<<(ostream& COUT, YouTubeChannel& ytChannel) {
+		COUT << "YouTube channel name: " << ytChannel.Channel << endl;
+		COUT << "Owner name: " << ytChannel.FirstName << " " << ytChannel.LastName << endl;
+		COUT << "Owner age: " << ytChannel.Age << endl;
+		COUT << "Owner email: " << ytChannel.Email << endl;
+		COUT << "Channel description:" << ytChannel.Description << endl;
+		COUT << "Numbers of subscribers: " << ytChannel.GetSubscribersInfo() << endl;
+		return COUT;
+	}
+
+	~YouTubeChannel() {};
+
+};
+
+class MyCollection
+{
+private:
+	list<YouTubeChannel> myChannels;
+
+public:
+	void operator+=(YouTubeChannel& channel) {
+		myChannels.push_back(channel);
+	}
+
+	void operator-=(YouTubeChannel& channel) {
+		myChannels.remove(channel);
+	}
+
+	friend ostream& operator<<(ostream& COUT, MyCollection& myCollection) {
+		for (YouTubeChannel& ytChannel : myCollection.myChannels) {
+			COUT << ytChannel << endl;
+		}
+		return COUT;
+	}
+
+
+};
+
+int main() {
+	// Creation of two YouTube channels
+	YouTubeChannel yt1 = YouTubeChannel("AlexProgramming", "Alex", "Popescu", 25, "Programming lessons");
+	YouTubeChannel yt2 = YouTubeChannel("MariusCooking", "Marius", "Tataru", 30, "Cooking lessons");
+
+	//Creating videos
+	Video v1 = Video("C++ Pointers Course", "25.10.2023", "25:40");
+	Video v2 = Video("Data Structures Course", "28.10.2023", "45:26");
+	Video v3 = Video("C++ POO Course", "30.10.2023", "60:00");
+	Video v4 = Video("SQL Course", "3.11.2023", "45:30");
+	Video v5 = Video("Donut Recipe", "26.10.2023", "5:25");
+	Video v6 = Video("Cheesecake Recipe", "2.11.2023", "10:10");
+	Video v7 = Video("Pizza Recipe", "6.11.2023", "8:30");
+	Video v8 = Video("Cake Recipe", "10.11.2023", "15:50");
+
+	//Add videos to channels
+	yt1.AddVideo(v1);
+	yt1.AddVideo(v2);
+	yt1.AddVideo(v3);
+	yt1.AddVideo(v4);
+
+	yt2.AddVideo(v5);
+	yt2.AddVideo(v6);
+	yt2.AddVideo(v7);
+	yt2.AddVideo(v8);
+
+
+	// Create a new YouTube channel (copy of the first YouTube channel)
+	YouTubeChannel yt3(yt1);
+
+	// List of videos from channels
+	yt1.ListVideo();
+	cout << "\n\n\n\n\n";
+	yt2.ListVideo();
+	cout << "\n\n\n\n\n";
+	yt3.ListVideo();
+	cout << "\n\n\n\n\n";
+
+	// Subscribe and Unsubscribe to YouTube channels
+	yt1.Subscribe();
+	yt1.Subscribe();
+	yt1.Subscribe();
+	yt1.Subscribe();
+	yt1.Unsubscribe();
+
+	// Add views and get info about a certain video
+	v1.Watch(); 
+	v1.Watch(); 
+
+	v2.Watch(); 
+
+	v1.GetVideoInfo();
+	cout << "\n";
+	v2.GetVideoInfo(); 
+	cout << "\n";
+
+
+	// Displaying the details of a YouTube channel
+	cout << yt1<<"\n";
+	//yt1.GetChannelInfo();(you can use this or "cout<<yt1;")
+
+
+	//Create a collection of YouTube channels
+	MyCollection myCollection;
+	myCollection += yt1;
+	myCollection += yt2;
+
+	cout <<"YouTube channels collection: \n\n"<< myCollection<<"\n";
+
+	return 0;
+}
