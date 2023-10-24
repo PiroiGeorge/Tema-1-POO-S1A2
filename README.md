@@ -1,10 +1,19 @@
 # Tema-1-POO-S1A2
 
+*Define at least 3-4 classes using composition.
+*Initialization constructors, copy constructor, copy assignment operator, destructor, and operator<< for all classes for displaying (std::ostream):
 
-*Definirea a minim 3-4 clase folosind compunere
-*Constructori de inițializare, constructor de copiere, operator= de copiere, destructor, operator<< pentru toate clasele pentru afișare (std::ostream)
-*Cât mai multe const (unde este cazul)
-*Implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese
-*Scenariu de utilizare a claselor definite:
-*crearea de obiecte și apelarea tuturor funcțiilor membru publice în main
+*Implement initialization constructors, copy constructors, copy assignment operators, destructors, and operator<< overloads for all classes to enable displaying with std::ostream.
+*Utilize as many 'const' qualifiers as necessary.
 
+*Implementation of a minimum of 3 public member functions for specific functionalities related to the chosen theme:
+
+*Create and implement at least 3 public member functions for the specific functionalities related to your chosen theme.
+*Usage scenario for the defined classes:
+
+*Describe a usage scenario for the defined classes, including the creation of objects and the invocation of all public member functions in the main program.
+
+
+
+
+#I've developed a YouTube channel management program. With it, you can create, add, and view videos, curate favorite channels, subscribe or unsubscribe, maintain video lists, and access channel info.
